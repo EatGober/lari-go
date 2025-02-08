@@ -19,12 +19,9 @@ func SendMessage(to string, body string) {
 		log.Fatal("Error loading .env")
 	}
 
-	twSid := os.Getenv("TW_ACC_SID")
-	twAuth := os.Getenv("TW_AUTH")
-
 	client := twilio.NewRestClientWithParams(twilio.ClientParams{
-		Username: twSid,
-		Password: twAuth,
+		Username: os.Getenv("TW_ACC_SID"),
+		Password: os.Getenv("TW_AUTH"),
 	})
 
 	fmt.Println("Sending SMS Message...")

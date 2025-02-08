@@ -1,7 +1,9 @@
-package notify
+package endpoint
 
 import (
-	// "lari-go/messaging"
+	"fmt"
+	"lari-go/internal/scheduler"
+	"net/http"
 
 	// "encoding/json"
 	// "log"
@@ -10,13 +12,27 @@ import (
 )
 
 func RunServer() {
+	fmt.Println("text")
 	router := gin.Default()
 
-	router.POST("/sms", func(context *gin.Context) {
+	// use router.POST when actually implementing
+	router.GET("/sms", func(context *gin.Context) {
 
 	})
 
-	router.POST("/confirm/:id", func(context *gin.Context) {
+	router.GET("/confirm/:timeslotid/:patientid", func(context *gin.Context) {
+		patientId := context.Param("patientid")
+		timeslotId := context.Param("timeslotid")
+
+		success := scheduler.Validate(patientId, timeslotId)
+
+		if success {
+			// redirect to success page
+			context.Redirect(http.StatusFound, "https://google.com")
+		} else {
+			// redirect to fail page
+			context.Redirect(http.StatusFound, "https://bing.com")
+		}
 
 	})
 
