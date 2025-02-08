@@ -11,8 +11,16 @@ import (
 )
 
 func auth() *redis.Client {
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("Error getting current directory: %v", err)
+	}
+
+	// Construct the full path to .env
+	envPath := cwd + "/.env"
+
 	fmt.Println("Loading environment variables...")
-	err := godotenv.Load()
+	err = godotenv.Load(envPath)
 
 	if err != nil {
 		log.Fatal("Error loading .env")
@@ -89,8 +97,16 @@ func saveItem(id string, item string) {
 }
 
 func getValue(id string) string {
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("Error getting current directory: %v", err)
+	}
+
+	// Construct the full path to .env
+	envPath := cwd + "/.env"
+
 	fmt.Println("Loading environment variables...")
-	err := godotenv.Load()
+	err = godotenv.Load(envPath)
 
 	if err != nil {
 		log.Fatal("Error loading .env")
