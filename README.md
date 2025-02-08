@@ -1,11 +1,38 @@
 # lari-go
 This repository contains the backend of the Lari project. Written in Golang
 
-## Package `messaging`
-Contains tools and functions to interface with Twilio.
+## Endpoint Documentation
+### Updates to Appointment Status
+This is for when an appointment is cancelled
 
-## Package `calendar`
-Contains tools and functions to handle scheduling
+`PUT /update`
 
-## Package `server`
-Opens endpoints for API communication with Twlilio, and EHR. Currently written for AthenaHealth.
+**Required Headers** 
+| Header Name | Description | (Example) Value |
+|--------------|------------|-----------------|
+| Content-Type | Media type of resource |  `application/json` **JSON TYPE ENFORCED** |
+| Status | Status of the appointment that changed | `"cancelled"` |
+
+### User Appointment Confirmation
+When a user confirms that they will accept an earlier appointment
+
+`GET /confirm/:timeslotid/:patientid`
+**URL Parameters**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| timeslotID | string | A unique ID for a particular timeslot |
+| patientID | string | A unique ID for a patient specific to a particular timeslot |
+
+## Package Structure
+
+Internal Packages
+
+### Package `internal/domain`
+
+### Package `internal/sms`
+
+### Package `internal/scheduler`
+
+Command Packages
+
+### Package `cmd/endpoint`
