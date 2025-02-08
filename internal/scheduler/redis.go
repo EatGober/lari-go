@@ -61,7 +61,19 @@ func Validate(patientId string, timeslotId string) bool {
 		fmt.Printf("Element found at index %v", index)
 		return true
 	}
+}
 
+func Remove(timeslotId string) {
+	client := auth()
+	ctx := context.Background()
+
+	deletedCount, err := client.Del(ctx, timeslotId).Result()
+
+	if err != nil {
+		log.Fatalf("Error deleting key %q: %v", timeslotId, err)
+	}
+
+	fmt.Printf("Deleted %d key(s).\n", deletedCount)
 }
 
 func saveItem(id string, item string) {

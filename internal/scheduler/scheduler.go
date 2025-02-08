@@ -1,8 +1,23 @@
 package scheduler
 
-// import
+import (
+	"lari-go/internal/domain"
+	"regexp"
+	"strconv"
+	"time"
+)
 
-func CreateSlot(patientIds []string, timeslotId string) {
+func CreateSlot(appoints []domain.Appointment) {
 
-	saveList(timeslotId, patientIds)
+	currentTime := time.Now().String()
+	re := regexp.MustCompile(`\D`)
+	apptID := re.ReplaceAllString(currentTime, "")
+
+	var pids []string
+
+	for _, appt := range appoints {
+		pids = append(pids, strconv.Itoa(appt.PatientID))
+	}
+
+	saveList(apptID, pids)
 }

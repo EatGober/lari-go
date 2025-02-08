@@ -7,4 +7,6 @@ import (
 func main() {
 	endpoint.RunServer()
 
+	// saveList(timeslotId, patientIds)
+
 }

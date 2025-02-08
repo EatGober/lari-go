@@ -11,6 +11,10 @@ import (
 	twilioApi "github.com/twilio/twilio-go/rest/api/v2010"
 )
 
+func DummyMessage(to string, body string) {
+	fmt.Println("Sending message\n", body, "\nto\t", to)
+}
+
 func SendMessage(to string, body string) {
 	fmt.Println("Loading environment variables...")
 	err := godotenv.Load()
