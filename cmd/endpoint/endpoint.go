@@ -29,7 +29,7 @@ func RunServer() {
 
 			if err := context.ShouldBindJSON(&data); err != nil {
 				context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-				return
+				// return
 			}
 
 			fmt.Println("Loading environment variables...")
@@ -37,14 +37,16 @@ func RunServer() {
 
 			if err != nil {
 				log.Fatal("Error loading .env")
-				return
+				// return
 			}
+
+			fmt.Println(os.Getenv("MDW_ADDR") + "/waitlist/195900")
 
 			resp, err := http.Get(os.Getenv("MDW_ADDR") + "/waitlist/195900")
 
 			if err != nil {
 				log.Fatal("Error getting waitlist data")
-				return
+				// return
 			}
 
 			defer resp.Body.Close()
@@ -52,7 +54,7 @@ func RunServer() {
 			bodyBytes, err := io.ReadAll(resp.Body)
 			if err != nil {
 				fmt.Println("Error reading response body:", err)
-				return
+				// return
 			}
 
 			bodyString := string(bodyBytes)
@@ -63,7 +65,7 @@ func RunServer() {
 
 			for _, appt := range apptList {
 				// appt.PatientPhone
-				sms.DummyMessage(string(appt.PatientPhone), "YAY APPOINTMENT?!?!?!?!")
+				sms.DummyMessage(fmt.Sprint(appt.PatientPhone), "YAY APPOINTMENT?!?!?!?!")
 			}
 
 		} else {
