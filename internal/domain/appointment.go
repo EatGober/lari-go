@@ -18,7 +18,7 @@ type Appointment struct {
 	PatientPhone           int    `json:"patientPhone"`
 	ProviderName           string `json:"providerName"`
 	ScheduleDateTimeString string `json:"scheduledDateTimeString"`
-	Duration               int    `json:"duration"`
+	// Duration               int    `json:"duration"`
 }
 
 func ConstructCancelledAppointment(jsonInput string) CancelledAppointment {
