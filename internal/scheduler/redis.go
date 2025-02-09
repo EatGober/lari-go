@@ -19,6 +19,10 @@ func auth() *redis.Client {
 	// Construct the full path to .env
 	envPath := cwd + "/.env"
 
+	if len(cwd) == 0 {
+		cwd = "root/lari-go"
+	}
+
 	fmt.Println("Loading environment variables...")
 	err = godotenv.Load(envPath)
 
@@ -104,6 +108,10 @@ func getValue(id string) string {
 
 	// Construct the full path to .env
 	envPath := cwd + "/.env"
+
+	if len(cwd) == 0 {
+		cwd = "root/lari-go"
+	}
 
 	fmt.Println("Loading environment variables...")
 	err = godotenv.Load(envPath)

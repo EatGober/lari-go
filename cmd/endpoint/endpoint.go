@@ -37,6 +37,10 @@ func RunServer() {
 				log.Fatalf("Error getting current directory: %v", err)
 			}
 
+			if len(cwd) == 0 {
+				cwd = "root/lari-go"
+			}
+
 			// Construct the full path to .env
 			envPath := cwd + "/.env"
 
