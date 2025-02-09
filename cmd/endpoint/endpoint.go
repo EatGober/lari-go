@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -79,12 +80,30 @@ func RunServer() {
 
 			apptId := scheduler.CreateSlot(apptList)
 
+			ctr := 0
+
+			// Parse the date-time string
+			t, err := time.Parse(time.RFC3339, data.ScheduleDateTimeString)
+			if err != nil {
+				fmt.Println("Error parsing date-time:", err)
+				return
+			}
+
+			// Format the time as MM/DD/YY HH:MM AM/PM
+			formattedTime := t.Format("01/02/06 03:04 PM")
+
+			// Print formatted time
+			fmt.Println("Formatted Time:", formattedTime)
+
 			for _, appt := range apptList {
 				ptURL := "http://us-east.performave.com:3001/confirm/" + (apptId) + "/" + strconv.Itoa(appt.PatientID)
 
-				text := "Hello! A waitlist spot has opened up on " + data.ScheduleDateTimeString + "! Click the link to take the spot: " + ptURL
+				text := "Hello! A waitlist spot has opened up on " + formattedTime + "! Click the link to take the spot: " + ptURL
 
-				// sms.SendMessage(appt.PatientPhone, text)
+				if ctr == 0 {
+					sms.SendMessage(appt.PatientPhone, text)
+					ctr++
+				}
 				sms.DummyMessage(appt.PatientPhone, text)
 			}
 
