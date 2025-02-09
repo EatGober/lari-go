@@ -124,10 +124,10 @@ func RunServer() {
 		if success {
 			// redirect to success page
 			scheduler.Remove(timeslotId)
-			context.Redirect(http.StatusFound, "https://google.com")
+			context.Redirect(http.StatusFound, os.Getenv("ADDR_SUCCESS"))
 		} else {
 			// redirect to fail page
-			context.Redirect(http.StatusFound, "https://bing.com")
+			context.Redirect(http.StatusFound, os.Getenv("ADDR_FAIL"))
 		}
 
 	})
