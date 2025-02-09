@@ -80,7 +80,7 @@ func RunServer() {
 			apptId := scheduler.CreateSlot(apptList)
 
 			for _, appt := range apptList {
-				ptURL := "http://us-east.performave.com:3001/" + (apptId) + "/" + strconv.Itoa(appt.PatientID)
+				ptURL := "http://us-east.performave.com:3001/confirm/" + (apptId) + "/" + strconv.Itoa(appt.PatientID)
 
 				text := "Hello! A waitlist spot has opened up on " + data.ScheduleDateTimeString + "! Click the link to take the spot: " + ptURL
 
