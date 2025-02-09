@@ -55,9 +55,10 @@ func RunServer() {
 
 			// context.Params
 
-			fmt.Println(os.Getenv("MDW_ADDR") + "/waitlist/195900/1/71")
+			addr := os.Getenv("MDW_ADDR") + "/waitlist/195900/1/71"
 
-			resp, err := http.Get(os.Getenv("MDW_ADDR"))
+			fmt.Println(addr)
+			resp, err := http.Get(addr)
 
 			if err != nil {
 				log.Fatal("Error getting waitlist data")
