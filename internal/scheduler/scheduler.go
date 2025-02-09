@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func CreateSlot(appoints []domain.Appointment) {
+func CreateSlot(appoints []domain.Appointment) string {
 
 	currentTime := time.Now().String()
 	re := regexp.MustCompile(`\D`)
@@ -20,4 +20,6 @@ func CreateSlot(appoints []domain.Appointment) {
 	}
 
 	saveList(apptID, pids)
+
+	return apptID
 }

@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -54,9 +55,9 @@ func RunServer() {
 
 			// context.Params
 
-			fmt.Println(os.Getenv("MDW_ADDR") + "/waitlist/195900")
+			fmt.Println(os.Getenv("MDW_ADDR") + "/waitlist/195900/1/71")
 
-			resp, err := http.Get(os.Getenv("MDW_ADDR") + "/waitlist/195900")
+			resp, err := http.Get(os.Getenv("MDW_ADDR"))
 
 			if err != nil {
 				log.Fatal("Error getting waitlist data")
@@ -75,12 +76,15 @@ func RunServer() {
 
 			apptList := domain.ConstructApptLists(bodyString)
 
-			scheduler.CreateSlot(apptList)
+			apptId := scheduler.CreateSlot(apptList)
 
 			for _, appt := range apptList {
-				// appt.PatientPhone
-				dummy := "APPOINTMENT?! I WAS AN APPOINTMENT ONCE\n" + data.ScheduleDateTimeString
-				sms.DummyMessage(fmt.Sprint(appt.PatientPhone), dummy)
+				ptURL := "http://us-east.performave.com:3001/" + (apptId) + "/" + strconv.Itoa(appt.PatientID)
+
+				text := "Hello! A waitlist spot has opened up on " + data.ScheduleDateTimeString + "! Click the link to take the spot: " + ptURL
+
+				// sms.SendMessage(appt.PatientPhone, text)
+				sms.DummyMessage(appt.PatientPhone, text)
 			}
 
 		} else {
