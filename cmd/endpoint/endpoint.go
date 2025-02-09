@@ -19,7 +19,7 @@ func RunServer() {
 
 	router.PUT("/update", func(context *gin.Context) {
 		status := context.GetHeader("Status")
-		var data domain.Appointment
+		var data domain.CancelledAppointment
 
 		if status == "" {
 			context.JSON(http.StatusBadRequest, gin.H{
@@ -52,6 +52,8 @@ func RunServer() {
 				// return
 			}
 
+			// context.Params
+
 			fmt.Println(os.Getenv("MDW_ADDR") + "/waitlist/195900")
 
 			resp, err := http.Get(os.Getenv("MDW_ADDR") + "/waitlist/195900")
@@ -77,7 +79,8 @@ func RunServer() {
 
 			for _, appt := range apptList {
 				// appt.PatientPhone
-				sms.DummyMessage(fmt.Sprint(appt.PatientPhone), "YAY APPOINTMENT?!?!?!?!")
+				dummy := "APPOINTMENT?! I WAS AN APPOINTMENT ONCE\n" + data.ScheduleDateTimeString
+				sms.DummyMessage(fmt.Sprint(appt.PatientPhone), dummy)
 			}
 
 		} else {
