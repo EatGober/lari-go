@@ -1,5 +1,6 @@
 # lari-go
-This repository contains the backend of the Lari project. Written in Golang
+This repository contains the backend of the Lari project. 
+Written in Golang
 Our other repos!
 
 https://github.com/EatGober/lari-middleware
